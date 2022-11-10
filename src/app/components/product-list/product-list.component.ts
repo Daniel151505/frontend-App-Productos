@@ -100,12 +100,8 @@ export class ProductListComponent implements OnInit {
       }).subscribe( (respuesta) => {
         if (respuesta) {
           this.productService.deleteProduct( id )
-            .pipe(
-              finalize(() => this.loaderService.hide())
-            )
             .subscribe(
-              res => {
-                console.log(res);
+              () => {
                 this.getProducts();
               },
               err => console.log(err)
@@ -123,11 +119,8 @@ export class ProductListComponent implements OnInit {
         if (respuesta) {
           product.choose = true;
           this.productService.updateProduct(id, product)
-            .pipe(
-              finalize(() => this.loaderService.hide())
-            )
             .subscribe(
-              res => {
+              () => {
                 this.getProducts();
               },
               err => console.log(err)
@@ -145,11 +138,8 @@ export class ProductListComponent implements OnInit {
         if (respuesta) {
           product.choose = false;
           this.productService.updateProduct(id, product)
-            .pipe(
-              finalize(() => this.loaderService.hide())
-            )
             .subscribe(
-              res => {
+              () => {
                 this.getProducts();
               },
               err => console.log(err)

@@ -1,0 +1,18 @@
+<div class="justify-content-center text-center align-item-center">
+  <h1 matDialogTitle>{{ data.title }}</h1>
+
+  <div mat-dialog-content>
+      <p [innerHTML]="data.message"></p>
+  </div>
+
+  <div mat-dialog-actions class="justify-content-center text-center align-item-center">
+      <button type="button" mat-raised-button color="primary" (click)="dialogRef.close(true)">
+          <mat-icon>check</mat-icon>
+          <span>Aceptar</span>
+      </button>
+      <button type="button" mat-raised-button color="warn" (click)="dialogRef.close(false)" *ngIf="!data.ocultarCerrar">
+          <mat-icon>close</mat-icon>
+          <span>Cancelar</span>
+      </button>
+  </div>
+</div>

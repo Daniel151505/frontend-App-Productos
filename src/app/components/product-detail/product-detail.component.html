@@ -1,0 +1,89 @@
+<!-- Product detail -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="form" class="row" novalidate>
+        <!-- Name -->
+        <mat-form-field class="col-md-6">
+          <input
+            id="name"
+            matInput
+            type="text"
+            formControlName="name"
+            placeholder="Nombre"
+          />
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            El nombre es requerido.
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('validateFormat')">
+            No se puede ingresar caracteres especiales.
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.errors?.['maxlength'] ">
+            El nombre solo debe de tener máximo 19 carácteres.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Price -->
+        <mat-form-field class="col-md-6">
+          <input
+            id="price"
+            matInput
+            type="number"
+            formControlName="price"
+            placeholder="Precio"
+          />
+          <mat-error *ngIf="form.get('price')?.hasError('required')">
+            El precio es requerido.
+          </mat-error>
+          <mat-error *ngIf="form.get('price')?.errors?.['maxlength'] ">
+            El precio solo debe de máximo 10 carácteres.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field class="pt-2">
+          <textarea
+            id="description"
+            matInput
+            placeholder="Descripción"
+            formControlName="description"
+          >
+          </textarea>
+
+          <mat-error *ngIf="form.get('description')?.hasError('required')">
+            La descripción es requerida.
+          </mat-error>
+          <mat-error *ngIf="form.get('description')?.errors?.['maxlength'] ">
+            La descripción solo debe de tener máximo 27 carácteres.
+          </mat-error>
+          <mat-error *ngIf="form.get('description')?.hasError('validateFormat')">
+            No se puede ingresar caracteres especiales.
+          </mat-error>
+        </mat-form-field>
+      </form>
+
+      <!-- Buttons -->
+      <div class="button-container text-center">
+        <button
+          mat-raised-button
+          id="submit"
+          color="primary"
+          class="m-2"
+          [disabled]="!form.valid"
+          (click)="submitProduct()"
+        >
+          Guardar
+        </button>
+        <button
+          id="cancel"
+          mat-raised-button
+          color="warn"
+          (click)="closeDialog()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="m-3 alig-items-center">
+
+  <!-- Select of list type and add button -->
+
+  <mat-card>
+    <div class="row">
+      <div class="col-md-11">
+        <mat-form-field class="w-100">
+          <mat-label>Tipo de lista</mat-label>
+          <mat-select [(ngModel)]="type" (ngModelChange)="filter()">
+            <mat-option id="selectTypeList" *ngFor="let list of listProductType" [value]="list">
+              {{ list }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+        <div class="col-md-1 text-center">
+          <button
+          id="addProduct"
+          color="primary"
+          mat-mini-fab
+          (click)="openProductDetail()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+    </div>
+  </mat-card>
+</div>
+
+<!-- Text if don´t have any product -->
+
+<div class="text-center text-light pt-5" *ngIf="this.productLength === 0" >
+  <h1> <b>Agrega nuevos productos</b> </h1>
+</div>
+
+<!-- All the card products -->
+
+<div class="m-3">
+  <div class="row gy-3 pb-3">
+    <div class="col-sm-6 col-md-4 col-lg-3"  *ngFor="let product of products| paginate:pageSize:pageNumber; let i = index ">
+      <mat-card class="m-2" [class]="product.choose ? 'bg-success text-light' : 'card border-success text-success'" [class.mat-elevation-z8]="true">
+
+        <mat-card-title>
+          <h2 class="text-center"> {{product.name}} </h2>
+        </mat-card-title>
+
+        <div class="text-center pb-2">
+          <button mat-raised-button id="choose" class="btn btn-success" (click)="chooseProduct(product._id, product)" *ngIf="!product.choose">Lo quiero</button>
+          <button mat-raised-button id="dontChoose" class="btn btn-warning text-white" (click)="dontChooseProduct(product._id, product)" *ngIf="product.choose">No lo quiero</button>
+        </div>
+
+        <mat-divider inset></mat-divider>
+
+        <mat-card-content class="text-center pt-2">
+          <p> <b>Precio:</b> {{product.price | currency: 'S/.' }} </p>
+          <b>Fecha:</b>
+            <p>{{product.createdAt | date:"MM/dd/yyyy" | slice:0:10 }}</p>
+          <b>Descripción:</b>
+          <p>{{product.description}}</p>
+        </mat-card-content>
+
+        <mat-divider inset></mat-divider>
+
+        <!-- Buttons -->
+        <mat-card-actions>
+          <div class="text-center" fxLayout="row">
+            <button
+              id="delete"
+              mat-mini-fab
+              color="warn"
+              class="m-2"
+              (click)="deleteProduct( product._id )"
+            >
+              <mat-icon aria-label="Delete icon">delete_forever</mat-icon>
+            </button>
+
+            <button
+              id="edit"
+              mat-mini-fab
+              color="primary"
+              (click)="openProductDetail( product._id )"
+            >
+              <mat-icon aria-label="Delete icon">edit</mat-icon>
+            </button>
+          </div>
+
+        </mat-card-actions>
+
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<!-- Paginator -->
+
+<div class="d-flex justify-content-center pb-3" *ngIf="productLength !== 0">
+  <mat-card>
+    <mat-paginator
+     id="paginator"
+     [length]="productLength"
+     [pageSize]="pageSize"
+     [pageSizeOptions]="pageSizeOptions"
+     (page)="handlePage($event)"
+     showFirstLastButtons
+    >
+    </mat-paginator>
+  </mat-card>
+</div>

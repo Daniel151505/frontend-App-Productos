@@ -18,6 +18,10 @@ export class ProductService {
     return this.http.get<Product[]>(`${BASE_URL}/product`);
   }
 
+  searchProducts(type: string, filter: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${BASE_URL}/product/search?type=${type}&filter=${filter}`);
+  }
+
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(`${BASE_URL}/product/${id}`)
   }

@@ -24,8 +24,65 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- Price -->
+        <!-- Category -->
+        <mat-form-field class="col-md-6" formGroupName="category">
+          <input
+            id="name"
+            matInput
+            type="text"
+           formControlName ="name"
+            placeholder="Categoria"
+          />
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            La categoría es requerida.
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('validateFormat')">
+            No se puede ingresar caracteres especiales.
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.errors?.['maxlength'] ">
+            La categoría solo debe de tener máximo 19 carácteres.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Marca -->
+        <mat-form-field class="col-md-6"  formGroupName="brand">
+          <input
+            id="name"
+            matInput
+            type="text"
+            formControlName="name"
+            placeholder="Marca"
+          />
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            La marca es requerida.
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('validateFormat')">
+            No se puede ingresar carácteres especiales.
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.errors?.['maxlength'] ">
+            La marca solo debe de tener máximo 19 carácteres.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Slug -->
         <mat-form-field class="col-md-6">
+          <input
+            id="name"
+            matInput
+            type="text"
+            formControlName="slug"
+            placeholder="Url"
+          />
+          <mat-error *ngIf="form.get('slug')?.hasError('required')">
+            La url es requerida.
+          </mat-error>
+          <mat-error *ngIf="form.get('slug')?.hasError('validateFormat')">
+            No se puede ingresar carácteres especiales.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Price -->
+        <mat-form-field class="col-md-12">
           <input
             id="price"
             matInput
@@ -61,6 +118,45 @@
             No se puede ingresar caracteres especiales.
           </mat-error>
         </mat-form-field>
+
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <div class="text-center">
+                <mat-panel-title>
+                  Información adicional
+                </mat-panel-title>
+              </div>
+
+            </mat-expansion-panel-header>
+
+            <div class="row">
+              <!-- brand slug  -->
+              <mat-form-field class="col-md-6" formGroupName="brand">
+                <input
+                  matInput
+                  type="text"
+                  formControlName="slug"
+                  placeholder="Marca slug"
+                />
+              </mat-form-field>
+
+              <!-- category slug -->
+              <mat-form-field class="col-md-6" formGroupName="category">
+                <input
+                  matInput
+                  type="text"
+                  formControlName="slug"
+                  placeholder="Categoría slug"
+                />
+              </mat-form-field>
+            </div>
+
+
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
       </form>
 
       <!-- Buttons -->

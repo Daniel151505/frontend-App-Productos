@@ -7,7 +7,7 @@
       <div class="col-md-11">
         <mat-form-field class="w-100">
           <mat-label>Tipo de lista</mat-label>
-          <mat-select [(ngModel)]="type" (ngModelChange)="filter()">
+          <mat-select [(ngModel)]="type" (ngModelChange)="filter()" [disabled]="filterChange">
             <mat-option id="selectTypeList" *ngFor="let list of listProductType" [value]="list">
               {{ list }}
             </mat-option>
@@ -25,7 +25,51 @@
           </button>
         </div>
     </div>
+    <div class="row">
+      <div class="text-center">
+        <mat-slide-toggle [(ngModel)]="isChecked" color="primary" (ngModelChange)="getProducts()" [disabled]="filterChange">
+          Ordenar Por fecha de Creación
+        </mat-slide-toggle>
+      </div>
+    </div>
   </mat-card>
+
+  <div class="pt-3 pb-3 text-center">
+    <button mat-raised-button color="primary" (click)="activeFilter()" *ngIf="!filterChange" >Activar filtros avanzados</button>
+    <button mat-raised-button color="warn" (click)="activeFilter()" *ngIf="filterChange" >Desactivar filtros avanzados</button>
+  </div>
+
+
+        <mat-card *ngIf="filterChange">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Tipo de filtro</mat-label>
+                <mat-select [(ngModel)]="typeFilter" (ngModelChange)="typeFilterSearch()">
+                  <mat-option id="selectTypeList" *ngFor="let list of listFilterType" [value]="list.value">
+                    {{ list.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label>Palabra de búsqueda</mat-label>
+                <input type="text"
+                placeholder="Escribe lo que deseas buscar"
+                matInput
+                [formControl]="filterControl"
+                [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async " [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
 </div>
 
 <!-- Text if don´t have any product -->
@@ -36,26 +80,29 @@
 
 <!-- All the card products -->
 
+
 <div class="m-3">
   <div class="row gy-3 pb-3">
     <div class="col-sm-6 col-md-4 col-lg-3"  *ngFor="let product of products| paginate:pageSize:pageNumber; let i = index ">
-      <mat-card class="m-2" [class]="product.choose ? 'bg-success text-light' : 'card border-success text-success'" [class.mat-elevation-z8]="true">
+      <mat-card class="m-2" [class]="product.status ? 'bg-success text-light' : 'card border-success text-success'" [class.mat-elevation-z8]="true">
 
         <mat-card-title>
           <h2 class="text-center"> {{product.name}} </h2>
         </mat-card-title>
 
         <div class="text-center pb-2">
-          <button mat-raised-button id="choose" class="btn btn-success" (click)="chooseProduct(product._id, product)" *ngIf="!product.choose">Lo quiero</button>
-          <button mat-raised-button id="dontChoose" class="btn btn-warning text-white" (click)="dontChooseProduct(product._id, product)" *ngIf="product.choose">No lo quiero</button>
+          <button mat-raised-button id="status" class="btn btn-success" (click)="chooseProduct(product._id, product)" *ngIf="!product.status">Lo quiero</button>
+          <button mat-raised-button id="dontStatus" class="btn btn-warning text-white" (click)="dontChooseProduct(product._id, product)" *ngIf="product.status">No lo quiero</button>
         </div>
 
         <mat-divider inset></mat-divider>
 
         <mat-card-content class="text-center pt-2">
           <p> <b>Precio:</b> {{product.price | currency: 'S/.' }} </p>
+          <p> <b>Categoría:</b> {{product.category.name }} </p>
+          <p> <b>Marca:</b> {{product.brand.name }} </p>
           <b>Fecha:</b>
-            <p>{{product.createdAt | date:"MM/dd/yyyy" | slice:0:10 }}</p>
+            <p>{{product.createdAt | date:"dd/MM/yyyy" | slice:0:10 }}</p>
           <b>Descripción:</b>
           <p>{{product.description}}</p>
         </mat-card-content>

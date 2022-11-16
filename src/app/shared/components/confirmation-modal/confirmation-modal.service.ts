@@ -17,18 +17,7 @@ export class ConfirmationModalService {
 
   constructor(private dialog: MatDialog) { }
 
-  public confirmacion(data: ConfirmData = {}): Observable<boolean> {
-    data.title = data.title || 'Confirmación';
-    data.message = data.message || 'Esta seguro?';
-    this.dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      width: '380px',
-      disableClose: true,
-      data: { title: data.title, message: data.message }
-    });
-    return this.dialogRef.afterClosed();
-  }
-
-  public confirmar(data: ConfirmData = {}): Observable<boolean> {
+  public confirmation(data: ConfirmData = {}): Observable<boolean> {
     data.title = data.title;
     data.message = data.message;
     data.cancel = data.cancel;

@@ -12,6 +12,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [],
   imports: [
@@ -25,6 +28,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCardModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatInputModule,
@@ -36,6 +42,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCardModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ]
 })
 export class AngularMaterialModule { }

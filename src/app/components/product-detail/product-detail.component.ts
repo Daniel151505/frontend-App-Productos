@@ -17,7 +17,16 @@ export class ProductDetailComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    choose: false
+    status: false,
+    category: {
+      name: '',
+      slug: ''
+    },
+    brand: {
+      name: '',
+      slug: ''
+    },
+    slug: ''
   };
 
   public form!: FormGroup;
@@ -40,6 +49,15 @@ export class ProductDetailComponent implements OnInit {
   async initForm() {
     this.form = this.fb.group({
       name: ['', Validators.compose([Validators.required, this.validateFormat, Validators.maxLength(19)])],
+      category: this.fb.group({
+        name: ['', Validators.compose([Validators.required, this.validateFormat, Validators.maxLength(19)])],
+        slug: ['']
+      }),
+      brand: this.fb.group({
+        name: ['', Validators.compose([Validators.required, this.validateFormat, Validators.maxLength(19)])],
+        slug: ['']
+      }),
+      slug: ['', Validators.compose([Validators.required])],
       price: ['', Validators.compose([Validators.required, Validators.maxLength(10)])],
       description: ['', Validators.compose([Validators.required, Validators.maxLength(27), this.validateFormat])],
     });
@@ -53,6 +71,8 @@ export class ProductDetailComponent implements OnInit {
         .subscribe( (res) => {
           this.product = res;
           this.form.patchValue(this.product);
+          console.log(this.form)
+
         }
       )
     }
@@ -67,12 +87,33 @@ export class ProductDetailComponent implements OnInit {
     return null;
   }
 
+  convertToSlug(event: any) {
+
+    const value = event.target.value;
+
+    console.log(value)
+
+  return  value.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
+
+  }
+
   submitProduct() {
     const payload = {
       name: this.form.get('name')?.value ,
+      category: {
+        name: this.form.get('category.name')?.value,
+        slug: this.form.get('category.slug')?.value.toLowerCase().replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').replace(/^\s+|\s+$/gm,'').replace(/\s+/g, '-')
+      },
+      brand: {
+        name: this.form.get('brand.name')?.value,
+        slug: this.form.get('brand.slug')?.value.toLowerCase().replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').replace(/^\s+|\s+$/gm,'').replace(/\s+/g, '-')
+      },
+      slug: this.form.get('slug')?.value.toLowerCase().replace(/[`~!@#$%^&*()_\-+=\[\]{};:'"\\|\/,.<>?\s]/g, ' ').replace(/^\s+|\s+$/gm,'').replace(/\s+/g, '-'),
+      description: this.form.get('description')?.value,
       price: this.form.get('price')?.value,
-      description: this.form.get('description')?.value
     }
+
+    console.log(payload)
 
     if(this.data === undefined) {
       this.productService.createProduct(payload)

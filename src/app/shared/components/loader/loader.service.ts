@@ -15,7 +15,7 @@ export class LoaderService {
   constructor(private dialog: MatDialog) { }
 
   public show(data:LoaderData = {}): Observable<boolean> {
-    this.dialogRef = this.dialog.open(LoaderComponent, { disableClose: true, backdropClass: 'light-backdrop', });
+    this.dialogRef = this.dialog.open(LoaderComponent, { disableClose: true });
     this.dialogRef.updateSize(data.width);
     return this.dialogRef.afterClosed();
   }

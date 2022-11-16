@@ -61,7 +61,7 @@ export class ProductListComponent implements OnInit {
   filterProductArray: any[] = [];
 
   public filterChange: boolean = false;
-  public isChecked: boolean = false;
+  public isChecked: boolean = true;
 
   constructor(
     private productService: ProductService,

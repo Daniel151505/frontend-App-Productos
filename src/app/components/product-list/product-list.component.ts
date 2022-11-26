@@ -81,6 +81,7 @@ export class ProductListComponent implements OnInit {
       this.products = res;
       this.orderDate();
     })
+
     return this.productListFilter.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
@@ -247,9 +248,7 @@ export class ProductListComponent implements OnInit {
       })
     }
 
-    this.filteredOptions?.pipe(
-      startWith(''),
-    )
+
     this.productListFilter = this.listProduct ;
     console.log(this.productListFilter)
 
